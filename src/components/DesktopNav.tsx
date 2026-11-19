@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { IoGlobeOutline } from 'react-icons/io5';
 import { useI18n } from '../i18n/I18nContext';
 import type { AppLanguage } from '../i18n/translations';
 
@@ -18,17 +18,6 @@ const LANGS: { value: AppLanguage; label: string }[] = [
 
 export function DesktopNav({ screen, onNavigate }: Props) {
   const { t, language, setLanguage, resolved } = useI18n();
-  const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const onDoc = (e: MouseEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener('mousedown', onDoc);
-    return () => document.removeEventListener('mousedown', onDoc);
-  }, [open]);
 
   const langValue: AppLanguage =
     language === 'auto' ? resolved : language;
@@ -42,8 +31,32 @@ export function DesktopNav({ screen, onNavigate }: Props) {
       >
         {t('appName')}
       </button>
-      <div className="desktop-header__right" ref={rootRef}>
+      <div className="desktop-header__right">
+        <nav className="desktop-links" aria-label="Main">
+          <button
+            type="button"
+            className={screen === 'home' ? 'is-active' : ''}
+            onClick={() => onNavigate('home')}
+          >
+            {t('tabHome')}
+          </button>
+          <button
+            type="button"
+            className={screen === 'album' ? 'is-active' : ''}
+            onClick={() => onNavigate('album')}
+          >
+            {t('album')}
+          </button>
+          <button
+            type="button"
+            className={screen === 'howto' ? 'is-active' : ''}
+            onClick={() => onNavigate('howto')}
+          >
+            {t('howToPlay')}
+          </button>
+        </nav>
         <label className="desktop-lang">
+          <IoGlobeOutline size={18} aria-hidden />
           <span className="visually-hidden">{t('language')}</span>
           <select
             value={langValue}
@@ -57,53 +70,6 @@ export function DesktopNav({ screen, onNavigate }: Props) {
             ))}
           </select>
         </label>
-        <button
-          type="button"
-          className={`desktop-menu-btn${open ? ' desktop-menu-btn--open' : ''}`}
-          aria-expanded={open}
-          aria-haspopup="menu"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {t('menu')}
-          <span aria-hidden>▾</span>
-        </button>
-        {open && (
-          <div className="desktop-menu" role="menu">
-            <button
-              type="button"
-              role="menuitem"
-              className={screen === 'home' ? 'is-active' : ''}
-              onClick={() => {
-                onNavigate('home');
-                setOpen(false);
-              }}
-            >
-              {t('tabHome')}
-            </button>
-            <button
-              type="button"
-              role="menuitem"
-              className={screen === 'album' ? 'is-active' : ''}
-              onClick={() => {
-                onNavigate('album');
-                setOpen(false);
-              }}
-            >
-              {t('album')}
-            </button>
-            <button
-              type="button"
-              role="menuitem"
-              className={screen === 'howto' ? 'is-active' : ''}
-              onClick={() => {
-                onNavigate('howto');
-                setOpen(false);
-              }}
-            >
-              {t('howToPlay')}
-            </button>
-          </div>
-        )}
       </div>
     </header>
   );

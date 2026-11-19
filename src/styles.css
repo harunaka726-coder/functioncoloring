@@ -99,7 +99,6 @@ textarea {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding-bottom: var(--footer-h);
 }
 
 .screen-header {
@@ -496,7 +495,9 @@ textarea {
   width: 100%;
   max-width: 520px;
   max-height: 78vh;
-  overflow-y: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: var(--surface-container-lowest);
   border-top-left-radius: var(--radius-xl);
   border-top-right-radius: var(--radius-xl);
@@ -515,6 +516,29 @@ textarea {
 .modal-title {
   margin: 0 0 12px;
   font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.modal-sticky-actions {
+  flex-shrink: 0;
+  padding-top: 12px;
+  margin-top: 8px;
+  border-top: 1px solid var(--outline-variant);
+}
+
+.btn-cancel-block {
+  width: 100%;
+  border: 1px solid var(--outline-variant);
+  background: var(--surface-container);
+  color: var(--on-surface);
+  border-radius: var(--radius-full);
+  padding: 12px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-cancel-block:hover {
+  background: var(--surface-container-highest);
 }
 
 .sheet-handle {
@@ -523,9 +547,13 @@ textarea {
   border-radius: 2px;
   background: var(--outline-variant);
   margin: 0 auto var(--space-md);
+  flex-shrink: 0;
 }
 
-.kind-list {
+.kind-list,
+.palette-list {
+  flex: 1;
+  min-height: 0;
   max-height: 50vh;
   overflow-y: auto;
 }
@@ -658,19 +686,22 @@ textarea {
   margin: 4px 0 8px;
 }
 
-/* Footer */
-.footer-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 50;
-  display: flex;
-  border-top: 1px solid var(--outline-variant);
+/* Bottom chrome: site footer + tab bar (in flow, not overlapping) */
+.app-chrome-bottom {
+  flex-shrink: 0;
   background: var(--surface-container-lowest);
-  padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px));
-  max-width: 1200px;
-  margin: 0 auto;
+  border-top: 1px solid var(--outline-variant);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.footer-nav {
+  position: static;
+  display: flex;
+  background: transparent;
+  border-top: none;
+  padding: 8px 0 10px;
+  max-width: none;
+  margin: 0;
 }
 
 .footer-tab {
@@ -882,7 +913,7 @@ textarea {
 
 /* AdSense reserved slots */
 .ad-slot {
-  min-height: 60px;
+  min-height: 50px;
   width: 100%;
   flex-shrink: 0;
   background: transparent;
@@ -890,28 +921,32 @@ textarea {
 
 .ad-slot--inline {
   margin: 0 var(--space-md) var(--space-sm);
-  min-height: 72px;
+  min-height: 50px;
+  max-height: 90px;
 }
 
 .ad-slot--footer {
-  min-height: 90px;
-  margin-bottom: var(--space-sm);
+  min-height: 50px;
+  max-height: 90px;
+  margin-bottom: 6px;
 }
 
-/* Site footer (legal links) — always visible */
+/* Site footer (legal links) — always visible, never under tab bar */
 .site-footer {
   flex-shrink: 0;
-  padding: var(--space-sm) var(--space-lg) calc(var(--space-sm) + 4px);
-  border-top: 1px solid var(--outline-variant);
-  background: rgba(255, 255, 255, 0.72);
+  padding: 8px var(--space-lg) 4px;
+  border-top: none;
+  background: transparent;
 }
 
 .site-footer__links {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 16px;
+  gap: 6px 14px;
   justify-content: center;
   font-size: 0.78rem;
+  line-height: 1.4;
+  padding-bottom: 4px;
 }
 
 .site-footer__links a {
@@ -1012,8 +1047,38 @@ textarea {
   .desktop-header__right {
     display: flex;
     align-items: center;
-    gap: 10px;
-    position: relative;
+    gap: 8px 16px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .desktop-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .desktop-links button {
+    border: none;
+    background: transparent;
+    padding: 8px 12px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--on-surface-variant);
+  }
+
+  .desktop-links button:hover,
+  .desktop-links button.is-active {
+    background: var(--primary-container);
+    color: var(--on-primary-container);
+  }
+
+  .desktop-lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--on-surface-variant);
   }
 
   .desktop-lang select {
@@ -1024,48 +1089,6 @@ textarea {
     cursor: pointer;
   }
 
-  .desktop-menu-btn {
-    border: 1px solid var(--outline-variant);
-    border-radius: var(--radius-full);
-    padding: 8px 14px;
-    background: var(--surface-container-lowest);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 600;
-  }
-
-  .desktop-menu {
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 0;
-    min-width: 180px;
-    background: #fff;
-    border: 1px solid var(--outline-variant);
-    border-radius: var(--radius-md);
-    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
-    padding: 6px;
-    z-index: 40;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .desktop-menu button {
-    border: none;
-    background: transparent;
-    text-align: left;
-    padding: 10px 12px;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-
-  .desktop-menu button:hover,
-  .desktop-menu button.is-active {
-    background: var(--primary-container);
-    color: var(--on-primary-container);
-  }
-
   .screen-header--mobile-only {
     display: none;
   }
@@ -1074,12 +1097,12 @@ textarea {
     display: none;
   }
 
-  .screen {
-    padding-bottom: 0;
+  .app-chrome-bottom {
+    border-top: 1px solid var(--outline-variant);
   }
 
   .site-footer {
-    padding-bottom: 16px;
+    padding: 10px 20px 14px;
   }
 
   /* Dock add/paint/color sheets into the right panel */
@@ -1087,7 +1110,7 @@ textarea {
     position: absolute;
     inset: 0;
     z-index: 30;
-    background: rgba(248, 249, 255, 0.55);
+    background: rgba(248, 249, 255, 0.72);
     display: flex;
     align-items: stretch;
     justify-content: stretch;
@@ -1101,6 +1124,16 @@ textarea {
     margin: 0;
     border-radius: var(--radius-lg);
     box-shadow: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 12px;
+  }
+
+  .modal-sheet--panel .kind-list,
+  .modal-sheet--panel .palette-list {
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
   }
 

@@ -75,15 +75,16 @@ export default function App() {
           )}
         </div>
 
-        <SiteFooter />
-
-        <FooterNav
-          active={footerActive}
-          onChange={(tab) => {
-            if (tab === 'settings') setScreen('settings');
-            else setScreen(tab);
-          }}
-        />
+        <div className="app-chrome-bottom">
+          <SiteFooter />
+          <FooterNav
+            active={footerActive}
+            onChange={(tab) => {
+              if (tab === 'settings') setScreen('settings');
+              else setScreen(tab);
+            }}
+          />
+        </div>
 
         <LandingModal open={landingOpen} onStart={dismissLanding} />
       </div>

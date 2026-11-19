@@ -101,16 +101,19 @@ export function FunctionPanel({
                 </button>
               ))}
             </div>
-            <button
-              type="button"
-              className="btn-text"
-              onClick={() => setPickerOpen(false)}
-            >
-              {t('cancel')}
-            </button>
+            <div className="modal-sticky-actions">
+              <button
+                type="button"
+                className="btn-cancel-block"
+                onClick={() => setPickerOpen(false)}
+              >
+                {t('cancel')}
+              </button>
+            </div>
           </div>
         </div>
       )}
+
     </div>
   );
 }
