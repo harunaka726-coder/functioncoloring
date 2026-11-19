@@ -10,6 +10,7 @@ import {
   type MathFunction,
 } from '../types/functions';
 import { formatFormula } from '../utils/formatFormula';
+import { Icons } from './Icons';
 
 type Props = {
   functions: MathFunction[];
@@ -64,12 +65,12 @@ export function FunctionPanel({
         aria-label={t('addFunction')}
         onClick={() => setPickerOpen(true)}
       >
-        +
+        {Icons.add()}
       </button>
 
       {pickerOpen && (
         <div
-          className="modal-backdrop"
+          className="modal-backdrop modal-backdrop--panel"
           role="presentation"
           onClick={() => setPickerOpen(false)}
           onKeyDown={(e: React.KeyboardEvent) =>
@@ -77,7 +78,7 @@ export function FunctionPanel({
           }
         >
           <div
-            className="modal-sheet modal-sheet--bottom"
+            className="modal-sheet modal-sheet--bottom modal-sheet--panel"
             role="dialog"
             aria-modal="true"
             onClick={(e) => e.stopPropagation()}
@@ -182,7 +183,7 @@ function FunctionCard({
           aria-label={fn.visible ? 'hide' : 'show'}
           onClick={() => onUpdateStyle(fn.id, { visible: !fn.visible })}
         >
-          {fn.visible ? '👁' : '🚫'}
+          {fn.visible ? Icons.eye() : Icons.eyeOff()}
         </button>
         <button
           type="button"
@@ -190,7 +191,7 @@ function FunctionCard({
           aria-label="delete"
           onClick={() => onRemove(fn.id)}
         >
-          🗑
+          {Icons.trash()}
         </button>
       </div>
 

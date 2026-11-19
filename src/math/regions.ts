@@ -21,7 +21,7 @@ export function detectRegions(
   const bounds = viewBounds;
   const span = Math.max(bounds.xMax - bounds.xMin, bounds.yMax - bounds.yMin);
   // 滑らかさと速度のバランス（大きすぎると UI が固まる）
-  const res = Math.min(180, Math.max(resolution, Math.round(span / 0.14)));
+  const res = Math.min(320, Math.max(resolution, Math.round(span / 0.1)));
   const { grid, nx, ny, dx, dy } = sampleVertexGrid(visible, bounds, res);
   const signatures = collectSignatures(grid, nx, ny);
   const regions: Region[] = [];

@@ -17,7 +17,6 @@ import {
   zoomBounds,
 } from '../math/viewport';
 import type { MathFunction, Region, ViewBounds } from '../types/functions';
-import { ColorPickerModal } from './ColorPickerModal';
 
 export type GraphCanvasHandle = {
   getSvgElement: () => SVGSVGElement | null;
@@ -33,7 +32,7 @@ type Props = {
   showAxes: boolean;
   showLabels: boolean;
   onViewBoundsChange: (bounds: ViewBounds, recompute: boolean) => void;
-  onRegionColorChange: (signature: string, color: string) => void;
+  onRegionPick: (signature: string, color: string) => void;
 };
 
 function gridStep(span: number): number {
@@ -182,15 +181,11 @@ export const GraphCanvas = forwardRef<GraphCanvasHandle, Props>(function GraphCa
     showAxes,
     showLabels,
     onViewBoundsChange,
-    onRegionColorChange,
+    onRegionPick,
   },
   ref,
 ) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const [picker, setPicker] = useState<{
-    signature: string;
-    color: string;
-  } | null>(null);
   const [previewBounds, setPreviewBounds] = useState<ViewBounds | null>(null);
 
   const startBoundsRef = useRef(bounds);
@@ -301,10 +296,7 @@ export const GraphCanvas = forwardRef<GraphCanvasHandle, Props>(function GraphCa
       const signature = regionSignature(functionsRef.current, p.x, p.y);
       if (signature) {
         const region = regionsRef.current.find((r) => r.signature === signature);
-        setPicker({
-          signature,
-          color: region?.color ?? DEFAULT_REGION_COLOR,
-        });
+        onRegionPick(signature, region?.color ?? DEFAULT_REGION_COLOR);
       }
       gesturingRef.current = false;
     }
@@ -414,16 +406,6 @@ export const GraphCanvas = forwardRef<GraphCanvasHandle, Props>(function GraphCa
           </svg>
         )}
       </div>
-
-      <ColorPickerModal
-        open={picker != null}
-        currentColor={picker?.color}
-        onClose={() => setPicker(null)}
-        onSelect={(color) => {
-          if (picker) onRegionColorChange(picker.signature, color);
-          setPicker(null);
-        }}
-      />
     </>
   );
 });

@@ -58,6 +58,9 @@ export type MessageKey =
   | 'cancel'
   | 'howToTitle'
   | 'howToBody'
+  | 'tryIt'
+  | 'otherWorks'
+  | 'menu'
   | 'paintColorCount'
   | 'paintRandom'
   | 'strokeColor'
@@ -161,6 +164,9 @@ const ja: Record<MessageKey, string> = {
   howToTitle: '使い方',
   howToBody:
     '1. 関数を追加して係数を動かします。\n2. 曲線が交差してできる領域を「ペイント」で塗ります。\n3. 領域をタップして色を変えられます。\n4. ピンチで拡大、ドラッグで移動できます。\n5. 「保存」でアプリ内アルバムへ保存できます。\n6. 「シェア」でXやLINEなどに送れます。',
+  tryIt: '使ってみる',
+  otherWorks: '他の作品はこちら',
+  menu: 'メニュー',
   paintColorCount: '{n}色',
   paintRandom: 'ランダム（{n}色）',
   strokeColor: '線の色',
@@ -265,6 +271,9 @@ const en: Record<MessageKey, string> = {
   howToTitle: 'How to use',
   howToBody:
     '1. Add functions and adjust coefficients.\n2. Paint regions created by intersections.\n3. Tap a region to pick a color.\n4. Pinch to zoom, drag to pan.\n5. Save to the in-app album (Album tab).\n6. Share to X, LINE, and more.',
+  tryIt: 'Try it',
+  otherWorks: 'More of my work',
+  menu: 'Menu',
   paintColorCount: '{n} colors',
   paintRandom: 'Random ({n} colors)',
   strokeColor: 'Stroke color',
@@ -365,6 +374,9 @@ const es: Record<MessageKey, string> = {
   howToTitle: 'Cómo usar',
   howToBody:
     '1. Añade funciones y ajusta coeficientes.\n2. Pinta las regiones de las intersecciones.\n3. Toca una región para elegir color.\n4. Pellizca para zoom, arrastra para mover.\n5. Guarda en el álbum.\n6. Comparte la imagen.',
+  tryIt: 'Probar',
+  otherWorks: 'Más trabajos',
+  menu: 'Menú',
   paintColorCount: '{n} colores',
   paintRandom: 'Aleatorio ({n} colores)',
   strokeColor: 'Color de línea',
@@ -465,6 +477,9 @@ const zh: Record<MessageKey, string> = {
   howToTitle: '使用方法',
   howToBody:
     '1. 添加函数并调整系数。\n2. 用“上色”填充交点形成的区域。\n3. 点击区域可自选颜色。\n4. 双指缩放，拖动平移。\n5. 可保存到应用内相册。\n6. 可分享到 X、LINE 等。',
+  tryIt: '开始使用',
+  otherWorks: '其他作品',
+  menu: '菜单',
   paintColorCount: '{n} 色',
   paintRandom: '随机（{n} 色）',
   strokeColor: '线条颜色',

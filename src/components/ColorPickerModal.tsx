@@ -22,13 +22,13 @@ export function ColorPickerModal({
 
   return (
     <div
-      className="modal-backdrop"
+      className="modal-backdrop modal-backdrop--panel"
       role="presentation"
       onClick={onClose}
       onKeyDown={(e) => e.key === 'Escape' && onClose()}
     >
       <div
-        className="modal-sheet modal-sheet--compact"
+        className="modal-sheet modal-sheet--compact modal-sheet--panel"
         role="dialog"
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}

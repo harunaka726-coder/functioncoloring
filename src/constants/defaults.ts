@@ -29,7 +29,8 @@ export const MIN_ZOOM = 0.08;
 export const MAX_ZOOM = 8;
 
 /** ベース解像度（ワールド span に応じて引き上げ） */
-export const REGION_GRID_RESOLUTION = 120;
+/** Higher than native app — large PC canvases need finer region edges. */
+export const REGION_GRID_RESOLUTION = 220;
 export const CURVE_SAMPLE_COUNT = 180;
 
 export const DEFAULT_STROKE_COLOR = '#0F172A';

@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { saveToAlbum } from '../album/storage';
 import { ActionBar } from '../components/ActionBar';
+import { AdSlot } from '../components/AdSlot';
+import { ColorPickerModal } from '../components/ColorPickerModal';
 import { FunctionPanel } from '../components/FunctionPanel';
 import { GraphCanvas, type GraphCanvasHandle } from '../components/GraphCanvas';
+import { Icons } from '../components/Icons';
 import { PaintModal } from '../components/PaintModal';
 import { useFunctionArt } from '../hooks/useFunctionArt';
 import { useI18n } from '../i18n/I18nContext';
@@ -22,6 +25,10 @@ export function HomeScreen({ restoreProject, onRestoreConsumed }: Props) {
 
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const [paintOpen, setPaintOpen] = useState(false);
+  const [colorPick, setColorPick] = useState<{
+    signature: string;
+    color: string;
+  } | null>(null);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -110,7 +117,7 @@ export function HomeScreen({ restoreProject, onRestoreConsumed }: Props) {
 
   return (
     <div className="screen screen--home">
-      <header className="screen-header">
+      <header className="screen-header screen-header--mobile-only">
         <h1 className="brand">{t('appName')}</h1>
       </header>
 
@@ -126,12 +133,6 @@ export function HomeScreen({ restoreProject, onRestoreConsumed }: Props) {
         onSave={onSave}
         onShare={onShare}
         onDownload={onDownload}
-      />
-
-      <PaintModal
-        open={paintOpen}
-        onClose={() => setPaintOpen(false)}
-        onApply={art.paint}
       />
 
       <div className="home-body">
@@ -150,7 +151,9 @@ export function HomeScreen({ restoreProject, onRestoreConsumed }: Props) {
                   showAxes={art.showAxes}
                   showLabels={art.showLabels}
                   onViewBoundsChange={art.setViewBounds}
-                  onRegionColorChange={art.setRegionColor}
+                  onRegionPick={(signature, color) =>
+                    setColorPick({ signature, color })
+                  }
                 />
               </div>
             </div>
@@ -162,7 +165,7 @@ export function HomeScreen({ restoreProject, onRestoreConsumed }: Props) {
                 disabled={!art.canUndo}
                 onClick={art.undo}
               >
-                ↶
+                {Icons.undo()}
               </button>
               <button
                 type="button"
@@ -171,7 +174,7 @@ export function HomeScreen({ restoreProject, onRestoreConsumed }: Props) {
                 disabled={!art.canRedo}
                 onClick={art.redo}
               >
-                ↷
+                {Icons.redo()}
               </button>
             </div>
           </div>
@@ -187,8 +190,24 @@ export function HomeScreen({ restoreProject, onRestoreConsumed }: Props) {
             onUpdateExpression={art.updateExpression}
             onUpdateStyle={art.updateStyle}
           />
+          <PaintModal
+            open={paintOpen}
+            onClose={() => setPaintOpen(false)}
+            onApply={art.paint}
+          />
+          <ColorPickerModal
+            open={colorPick != null}
+            currentColor={colorPick?.color}
+            onClose={() => setColorPick(null)}
+            onSelect={(color) => {
+              if (colorPick) art.setRegionColor(colorPick.signature, color);
+              setColorPick(null);
+            }}
+          />
         </div>
       </div>
+
+      <AdSlot className="ad-slot--inline" />
 
       {busy && (
         <div className="busy-overlay" aria-live="polite">

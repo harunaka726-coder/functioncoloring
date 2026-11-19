@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type ChangeEvent } from 'react';
 import {
+  deleteAlbum,
   deleteAlbumItem,
   exportAlbum,
   importAlbum,
@@ -7,6 +8,8 @@ import {
   parseAlbumImportFile,
   type AlbumItem,
 } from '../album/storage';
+import { AdSlot } from '../components/AdSlot';
+import { Icons } from '../components/Icons';
 import { useI18n } from '../i18n/I18nContext';
 import type { AlbumProject } from '../types/albumProject';
 import { downloadBlob, downloadDataUrl } from '../utils/pngExport';
@@ -36,6 +39,12 @@ export function AlbumScreen({ onReEdit }: Props) {
   const onDelete = (item: AlbumItem) => {
     if (!window.confirm(t('deleteImageConfirm'))) return;
     deleteAlbumItem(item.id);
+    reload();
+  };
+
+  const onDeleteAll = () => {
+    if (!window.confirm(t('deleteConfirm'))) return;
+    deleteAlbum();
     reload();
   };
 
@@ -93,6 +102,13 @@ export function AlbumScreen({ onReEdit }: Props) {
           >
             {t('importAlbum')}
           </button>
+          <button
+            type="button"
+            className="btn-ghost btn-ghost--danger"
+            onClick={onDeleteAll}
+          >
+            {t('deleteAlbum')}
+          </button>
           <input
             ref={importRef}
             type="file"
@@ -130,7 +146,7 @@ export function AlbumScreen({ onReEdit }: Props) {
                     title={t('downloadImage')}
                     onClick={() => onDownload(item)}
                   >
-                    ⬇
+                    {Icons.download()}
                   </button>
                   <button
                     type="button"
@@ -144,7 +160,7 @@ export function AlbumScreen({ onReEdit }: Props) {
                       onReEdit(item.project);
                     }}
                   >
-                    ✎
+                    {Icons.edit()}
                   </button>
                   <button
                     type="button"
@@ -152,7 +168,7 @@ export function AlbumScreen({ onReEdit }: Props) {
                     title={t('deleteImage')}
                     onClick={() => onDelete(item)}
                   >
-                    🗑
+                    {Icons.trash()}
                   </button>
                 </div>
               </article>
@@ -160,6 +176,8 @@ export function AlbumScreen({ onReEdit }: Props) {
           </div>
         )}
       </div>
+
+      <AdSlot className="ad-slot--inline" />
 
       {importOpen && (
         <div

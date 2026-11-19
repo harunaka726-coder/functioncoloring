@@ -33,13 +33,13 @@ export function PaintModal({ open, onClose, onApply }: Props) {
 
   return (
     <div
-      className="modal-backdrop"
+      className="modal-backdrop modal-backdrop--panel"
       role="presentation"
       onClick={onClose}
       onKeyDown={(e) => e.key === 'Escape' && onClose()}
     >
       <div
-        className="modal-sheet"
+        className="modal-sheet modal-sheet--panel"
         role="dialog"
         aria-modal="true"
         aria-labelledby="paint-modal-title"
