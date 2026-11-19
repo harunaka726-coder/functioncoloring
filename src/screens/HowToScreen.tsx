@@ -1,4 +1,3 @@
-import { AdSlot } from '../components/AdSlot';
 import { useI18n } from '../i18n/I18nContext';
 
 type Props = { onBack: () => void };
@@ -23,7 +22,6 @@ export function HowToScreen({ onBack }: Props) {
       <div className="howto-body">
         <p className="howto-text">{t('howToBody')}</p>
       </div>
-      <AdSlot className="ad-slot--inline" />
     </div>
   );
 }

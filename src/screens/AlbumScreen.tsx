@@ -8,7 +8,6 @@ import {
   parseAlbumImportFile,
   type AlbumItem,
 } from '../album/storage';
-import { AdSlot } from '../components/AdSlot';
 import { Icons } from '../components/Icons';
 import { useI18n } from '../i18n/I18nContext';
 import type { AlbumProject } from '../types/albumProject';
@@ -176,8 +175,6 @@ export function AlbumScreen({ onReEdit }: Props) {
           </div>
         )}
       </div>
-
-      <AdSlot className="ad-slot--inline" />
 
       {importOpen && (
         <div

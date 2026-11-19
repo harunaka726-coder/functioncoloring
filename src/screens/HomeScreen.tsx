@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { saveToAlbum } from '../album/storage';
 import { ActionBar } from '../components/ActionBar';
-import { AdSlot } from '../components/AdSlot';
 import { ColorPickerModal } from '../components/ColorPickerModal';
 import { FunctionPanel } from '../components/FunctionPanel';
 import { GraphCanvas, type GraphCanvasHandle } from '../components/GraphCanvas';
@@ -206,8 +205,6 @@ export function HomeScreen({ restoreProject, onRestoreConsumed }: Props) {
           />
         </div>
       </div>
-
-      <AdSlot className="ad-slot--inline" />
 
       {busy && (
         <div className="busy-overlay" aria-live="polite">
