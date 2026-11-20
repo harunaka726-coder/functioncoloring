@@ -15,6 +15,7 @@ import {
   IoImagesOutline,
   IoResizeOutline,
   IoRefresh,
+  IoSaveOutline,
   IoSettings,
   IoSettingsOutline,
   IoShareOutline,
@@ -33,6 +34,7 @@ export const Icons = {
   download: (p?: { size?: number }) => (
     <IoDownloadOutline size={p?.size ?? size} />
   ),
+  save: (p?: { size?: number }) => <IoSaveOutline size={p?.size ?? size} />,
   share: (p?: { size?: number }) => <IoShareOutline size={p?.size ?? size} />,
   paint: (p?: { size?: number }) => <IoColorPalette size={p?.size ?? size} />,
   eye: (p?: { size?: number }) => <IoEyeOutline size={p?.size ?? size} />,

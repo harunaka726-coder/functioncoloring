@@ -67,7 +67,7 @@ export function ActionBar({
             label={t('save')}
             onClick={onSave}
             tone="tonal"
-            icon={Icons.album(false)}
+            icon={Icons.save()}
           />
           <IconBtn
             label={t('downloadImage')}

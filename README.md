@@ -2,6 +2,8 @@
 
 Browser version of **Function Coloring** — paint regions between math function graphs.
 
+Production URL: `https://functioncoloring.harunakajima.com`
+
 ## Setup
 
 ```bash
@@ -15,7 +17,7 @@ npm install
 npm run dev
 ```
 
-Open the URL Vite prints (usually `http://localhost:5173/functioncoloring/`).
+Open the URL Vite prints (usually `http://localhost:5173/`).
 
 ## Production build
 
@@ -23,31 +25,19 @@ Open the URL Vite prints (usually `http://localhost:5173/functioncoloring/`).
 npm run build
 ```
 
-Output is written to `dist/`.
+Output is written to `dist/`. Preview locally with `npm run preview`.
 
-Preview the production build locally:
+`vite.config.ts` uses `base: '/'` for root hosting on a subdomain.
 
-```bash
-npm run preview
-```
+## Deploy to Cloudflare Pages
 
-## Deploy to GitHub Pages
-
-This app is configured with `base: '/functioncoloring/'` in `vite.config.ts` for a project site at:
-
-`https://<username>.github.io/functioncoloring/`
-
-1. Build: `npm run build`
-2. Deploy the contents of `dist/` to the `gh-pages` branch (or use GitHub Actions).
-
-Example with `gh-pages` npm package:
-
-```bash
-npm install -D gh-pages
-npx gh-pages -d dist
-```
-
-Ensure the repository is named `functioncoloring` (or update `base` in `vite.config.ts` to match your repo name).
+1. Cloudflare Dashboard → **Workers & Pages** → create a Pages project
+2. Connect this repo (or upload `dist/`)
+3. Build settings:
+   - **Root directory:** `webapp`
+   - **Build command:** `npm run build`
+   - **Build output directory:** `dist`
+4. **Custom domains** → add `functioncoloring.harunakajima.com`
 
 ## Features
 
