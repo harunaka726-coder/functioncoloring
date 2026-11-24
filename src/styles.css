@@ -982,6 +982,14 @@ textarea {
   background: transparent;
 }
 
+.site-footer__copy {
+  margin: 0;
+  text-align: center;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  color: var(--on-surface-variant);
+}
+
 .site-footer__links {
   display: flex;
   flex-wrap: wrap;

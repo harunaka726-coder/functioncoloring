@@ -7,6 +7,7 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <AdSlot className="ad-slot--footer" />
+      <p className="site-footer__copy">© 2026 Haru Nakajima</p>
       <nav className="site-footer__links" aria-label="Site">
         <a href={privacyUrl} target="_blank" rel="noopener noreferrer">
           {t('privacyPolicy')}
